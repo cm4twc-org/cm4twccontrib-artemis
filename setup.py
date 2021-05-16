@@ -1,4 +1,4 @@
-from setuptools import setup, find_packages
+from setuptools import setup, find_namespace_packages
 
 
 pkg_name = 'Artemis'
@@ -34,12 +34,14 @@ setup(
         'Topic :: Scientific/Engineering :: Hydrology',
     ],
 
-    packages=find_packages(),
+    packages=find_namespace_packages(include=['cm4twccontrib.*']),
 
     namespace_packages=['cm4twccontrib'],
 
     install_requires=[
         'cm4twc'
     ],
+
+    zip_safe=False
 
 )
