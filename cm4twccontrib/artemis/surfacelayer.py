@@ -4,7 +4,7 @@ import cm4twc
 from cm4twc.settings import dtype_float
 
 
-class SurfaceLayerComponent(cm4twc.components.SurfaceLayerComponent):
+class SurfaceLayerComponent(cm4twc.component.SurfaceLayerComponent):
     """
     Artemis provides a simple runoff production model designed to be
     comparable with the runoff-production models typically embedded

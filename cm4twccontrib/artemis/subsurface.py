@@ -3,7 +3,7 @@ import numpy as np
 import cm4twc
 
 
-class SubSurfaceComponent(cm4twc.components.SubSurfaceComponent):
+class SubSurfaceComponent(cm4twc.component.SubSurfaceComponent):
     """
     Artemis provides a simple runoff production model designed to be
     comparable with the runoff-production models typically embedded
