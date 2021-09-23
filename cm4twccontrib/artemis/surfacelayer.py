@@ -225,50 +225,48 @@ class SurfaceLayerComponent(cm4twc.component.SurfaceLayerComponent):
         # snowmelt threshold [K]
         T_F = t_freeze
 
-        with np.errstate(over='ignore'):
-            # Update LAI and derived terms
-            month = datetime.month
-            L = ancil_L[month-1, ...]
-            # Canopy storage capacity [m] (Hough and Jones, MORECS)
-            C_t = 0.002 * L
-            # interception coefficient [-]
-            phi_t = 1 - 0.5 ** L
-            # Canopy resistance (calc from LAI) [s/m] (Beven 2000 p. 76)
-            r_c = 40.
+        # Update LAI and derived terms
+        month = datetime.month
+        L = ancil_L[month-1, ...]
+        # Canopy storage capacity [m] (Hough and Jones, MORECS)
+        C_t = 0.002 * L
+        # interception coefficient [-]
+        phi_t = 1 - 0.5 ** L
+        # Canopy resistance (calc from LAI) [s/m] (Beven 2000 p. 76)
+        r_c = 40.
 
-            # Compute derived meteorological variables
-            T_degC = tas - 273.
+        # Compute derived meteorological variables
+        T_degC = tas - 273.
 
-            # Hendrik; kPa
-            e_sat = 0.6108 * np.exp(T_degC * 17.27 / (237.3 + T_degC))
-            # kg/kg to kPa; Parish and Putnam 1977)
-            e_abs = huss * rho_a * R_v * tas / 1000
-            # slope of SVP curve kPa / degC
-            Delta_e = 4098. * e_sat / (237.3 + T_degC) ** 2
+        # Hendrik; kPa
+        e_sat = 0.6108 * np.exp(T_degC * 17.27 / (237.3 + T_degC))
+        # kg/kg to kPa; Parish and Putnam 1977)
+        e_abs = huss * rho_a * R_v * tas / 1000
+        # slope of SVP curve kPa / degC
+        Delta_e = 4098. * e_sat / (237.3 + T_degC) ** 2
 
-            # /!\__ADJUSTMENT_CM4TWC____________________________________
-            # taking z origin as the height where wind is zero (as in JULES)
-            z += d + z0
-            # __________________________________________________________
+        # /!\__ADJUSTMENT_CM4TWC____________________________________
+        # taking z origin as the height where wind is zero (as in JULES)
+        z += d + z0
+        # __________________________________________________________
 
-            with np.errstate(invalid='ignore'):
-                # aerodynamic resistance to evaporation
-                r_a = np.log((z - d) / z0) ** 2 / (kappa ** 2 * wind_speed)
-            # Prevent negative r_a
-            r_a = np.ma.where(r_a <= 0., 1, r_a)
+        # aerodynamic resistance to evaporation
+        r_a = np.log((z - d) / z0) ** 2 / (kappa ** 2 * wind_speed)
+        # Prevent negative r_a
+        r_a = np.ma.where(r_a <= 0., 1, r_a)
 
-            # /!\__ADJUSTMENT_CM4TWC____________________________________
-            # calculate upwelling shortwave "rsus" with albedo
-            rsus = surface_albedo * rsds
+        # /!\__ADJUSTMENT_CM4TWC____________________________________
+        # calculate upwelling shortwave "rsus" with albedo
+        rsus = surface_albedo * rsds
 
-            # calculate upwelling longwave "rlus" with air temperature
-            # (assuming surface temperature is air temperature)
-            # (ignoring emissivity)
-            rlus = air_temperature ** 4 * sigma_sb
+        # calculate upwelling longwave "rlus" with air temperature
+        # (assuming surface temperature is air temperature)
+        # (ignoring emissivity)
+        rlus = air_temperature ** 4 * sigma_sb
 
-            # total net radiation in W m-2
-            R_n = rsds + rlds - rsus - rlus
-            # __________________________________________________________
+        # total net radiation in W m-2
+        R_n = rsds + rlds - rsus - rlus
+        # __________________________________________________________
 
         # Partition precipitation between canopy, snow, and soil
         pr = pr / rho_lw  # convert to m/s
