@@ -286,7 +286,7 @@ class SurfaceLayerComponent(cm4twc.component.SurfaceLayerComponent):
         # convert to m/s
         e_can = e_can / lambda_lh / 1000.
         # scale canopy evaporation by canopy wetted fraction
-        e_can = e_can * (canopy / C_t)
+        e_can = np.ma.where(C_t < 1.e-11, 0., e_can * (canopy / C_t))
         # limit e_can to available canopy water
         e_can = np.minimum(canopy / dt, e_can)
         # update
@@ -304,7 +304,7 @@ class SurfaceLayerComponent(cm4twc.component.SurfaceLayerComponent):
         # avoid small roundoff values
         canopy = np.ma.where(canopy < 1.e-11, 0., canopy)
 
-        # Ensure canopy storage doesnt exceed capacity
+        # Ensure canopy storage doesn't exceed capacity
         q_t = np.ma.where(canopy > C_t, q_t + (canopy - C_t) / dt, q_t)
         canopy = np.ma.where(canopy > C_t, C_t, canopy)
 
