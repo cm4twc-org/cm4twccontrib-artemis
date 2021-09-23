@@ -218,7 +218,7 @@ class SurfaceLayerComponent(cm4twc.component.SurfaceLayerComponent):
         # Compute derived parameters
         # vegetation roughness length [m] (3e-4 is for bare soil)
         z0 = np.ma.where(h == 0, 3e-4, 0.1 * h)
-        # zero-plane displacement [m]
+        # zero-plane displacement height [m]
         d = 0.75 * h
         # temperature for snowfall [K]
         t_snow = t_freeze
@@ -238,8 +238,6 @@ class SurfaceLayerComponent(cm4twc.component.SurfaceLayerComponent):
 
             # Compute derived meteorological variables
             T_degC = tas - 273.
-            # Scale to 2m wind speed
-            wind_speed = wind_speed * 4.87 / (np.log(67.8 * z - 5.42))
 
             # Hendrik; kPa
             e_sat = 0.6108 * np.exp(T_degC * 17.27 / (237.3 + T_degC))
@@ -247,6 +245,12 @@ class SurfaceLayerComponent(cm4twc.component.SurfaceLayerComponent):
             e_abs = huss * rho_a * R_v * tas / 1000
             # slope of SVP curve kPa / degC
             Delta_e = 4098. * e_sat / (237.3 + T_degC) ** 2
+
+            # /!\__ADJUSTMENT_CM4TWC____________________________________
+            # taking z origin as the height where wind is zero (as in JULES)
+            z += d + z0
+            # __________________________________________________________
+
             with np.errstate(invalid='ignore'):
                 # aerodynamic resistance to evaporation
                 r_a = np.log((z - d) / z0) ** 2 / (kappa ** 2 * wind_speed)
