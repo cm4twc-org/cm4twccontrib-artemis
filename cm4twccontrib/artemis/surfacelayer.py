@@ -231,8 +231,8 @@ class SurfaceLayerComponent(cm4twc.component.SurfaceLayerComponent):
             L = ancil_L[month-1, ...]
             # Canopy storage capacity [m] (Hough and Jones, MORECS)
             C_t = 0.002 * L
-            # throughfall coefficient [-]
-            phi_t = np.ma.where(L == 0, 1, 1 - 0.5 ** L)
+            # interception coefficient [-]
+            phi_t = 1 - 0.5 ** L
             # Canopy resistance (calc from LAI) [s/m] (Beven 2000 p. 76)
             r_c = 40.
 
@@ -269,8 +269,8 @@ class SurfaceLayerComponent(cm4twc.component.SurfaceLayerComponent):
         # Partition precipitation between canopy, snow, and soil
         pr = pr / rho_lw  # convert to m/s
         p_snow = np.ma.where(tas <= t_snow, pr, 0.)
-        p_soil = np.ma.where(tas > t_snow, phi_t * pr, 0.)
-        p_can = np.ma.where(tas > t_snow, pr - p_soil, 0.)
+        p_can = np.ma.where(tas > t_snow, phi_t * pr, 0.)
+        p_soil = np.ma.where(tas > t_snow, pr - p_can, 0.)
 
         # CANOPY
 
