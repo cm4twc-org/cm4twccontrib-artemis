@@ -4,10 +4,11 @@ import cm4twc
 
 
 class SubSurfaceComponent(cm4twc.component.SubSurfaceComponent):
-    """
-    Artemis provides a simple runoff production model designed to be
+    """Artemis provides a simple runoff production model designed to be
     comparable with the runoff-production models typically embedded
-    within climate models. It is driven with precipitation, radiation,
+    within climate models.
+
+    It is driven with precipitation, radiation,
     temperature, humidity and wind speed on a daily time step and
     calculates canopy interception, evaporation, snowmelt, infiltration,
     and runoff. It uses a Rutter–Gash canopy formulation (`Gash, 1979`_)
