@@ -90,7 +90,7 @@ class SubSurfaceComponent(cm4twc.component.SubSurfaceComponent):
                    subsurface_store,
                    **kwargs):
 
-        subsurface_store[-1][:] = 0
+        subsurface_store.set_timestep(-1, 0.)
 
     def run(self,
             # from exchanger
@@ -119,7 +119,7 @@ class SubSurfaceComponent(cm4twc.component.SubSurfaceComponent):
         S_max = topmodel_saturation_capacity
         Lambda = topographic_index
 
-        subsurface_prev = subsurface_store[-1]
+        subsurface_prev = subsurface_store.get_timestep(-1)
         # ______________________________________________________________
 
         # SURFACE
@@ -175,7 +175,7 @@ class SubSurfaceComponent(cm4twc.component.SubSurfaceComponent):
         # ______________________________________________________________
 
         # /!\__UPDATE_STATES_CM4TWC_____________________________________
-        subsurface_store[0][:] = subsurface
+        subsurface_store.set_timestep(0, subsurface)
         # ______________________________________________________________
 
         return (

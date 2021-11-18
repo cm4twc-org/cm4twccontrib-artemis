@@ -181,8 +181,8 @@ class SurfaceLayerComponent(cm4twc.component.SurfaceLayerComponent):
                    canopy_store, snowpack_store,
                    **kwargs):
 
-        canopy_store[-1][:] = 0
-        snowpack_store[-1][:] = 0
+        canopy_store.set_timestep(-1, 0.)
+        snowpack_store.set_timestep(-1, 0)
 
     def run(self,
             # from exchanger
@@ -212,8 +212,8 @@ class SurfaceLayerComponent(cm4twc.component.SurfaceLayerComponent):
         h = vegetation_height
         ancil_L = leaf_area_index
 
-        canopy_prev = canopy_store[-1]
-        snowpack_prev = snowpack_store[-1]
+        canopy_prev = canopy_store.get_timestep(-1)
+        snowpack_prev = snowpack_store.get_timestep(-1)
         # ______________________________________________________________
 
         # Compute derived parameters
@@ -345,8 +345,8 @@ class SurfaceLayerComponent(cm4twc.component.SurfaceLayerComponent):
         e_surf = np.minimum(surface / dt, e_surf)
 
         # /!\__UPDATE_STATES_CM4TWC_____________________________________
-        canopy_store[0][:] = canopy
-        snowpack_store[0][:] = snowpack
+        canopy_store.set_timestep(0, canopy)
+        snowpack_store.set_timestep(0, snowpack)
         # ______________________________________________________________
 
         return (
