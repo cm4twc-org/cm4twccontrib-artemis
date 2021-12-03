@@ -186,8 +186,9 @@ class SurfaceLayerComponent(cm4twc.component.SurfaceLayerComponent):
                    canopy_store, snowpack_store,
                    **kwargs):
 
-        canopy_store.set_timestep(-1, 0.)
-        snowpack_store.set_timestep(-1, 0)
+        if not self.initialised_states:
+            canopy_store.set_timestep(-1, 0.)
+            snowpack_store.set_timestep(-1, 0)
 
     def run(self,
             # from exchanger

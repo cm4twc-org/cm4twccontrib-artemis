@@ -99,7 +99,8 @@ class SubSurfaceComponent(cm4twc.component.SubSurfaceComponent):
                    subsurface_store,
                    **kwargs):
 
-        subsurface_store.set_timestep(-1, 0.)
+        if not self.initialised_states:
+            subsurface_store.set_timestep(-1, 0.)
 
     def run(self,
             # from exchanger
