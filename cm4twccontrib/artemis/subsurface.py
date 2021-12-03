@@ -35,7 +35,7 @@ class SubSurfaceComponent(cm4twc.component.SubSurfaceComponent):
     .. _`Clark and Gedney, 2008`: https://doi.org/10.1029/2007JD008940
     .. _`Moore et al., 1999`: https://doi.org/10.5194/hess-3-233-1999
     .. _`Hock, 2003`: https://doi.org/10.1016/S0022-1694(03)00257-9
-    .. _`Beven, 2011`: http://doi.org/10.1002/9781119951001
+    .. _`Beven, 2011`: https://doi.org/10.1002/9781119951001
     .. _`Rango and Martinec, 1995`: https://doi.org/10.1111/j.1752-1688.1995.tb03392.x
     .. _`Zhang et al., 2006`: https://doi.org/10.3189/172756406781811952
     .. _`Parajka et al., 2010`: https://doi.org/10.1029/2010JD014086
@@ -47,6 +47,15 @@ class SubSurfaceComponent(cm4twc.component.SubSurfaceComponent):
     :licence: BSD-3
     :copyright: 2020, University of Oxford
     """
+    _inwards = {
+        'canopy_liquid_throughfall_and_snow_melt_flux',
+        'transpiration_flux_from_root_uptake'
+    }
+    _outwards = {
+        'soil_water_stress_for_transpiration',
+        'surface_runoff_flux_delivered_to_rivers',
+        'net_groundwater_flux_to_rivers'
+    }
     _inputs_info = {
         'topmodel_saturation_capacity': {
             'units': 'mm m-1',
@@ -94,8 +103,8 @@ class SubSurfaceComponent(cm4twc.component.SubSurfaceComponent):
 
     def run(self,
             # from exchanger
-            throughfall, snowmelt, transpiration, evaporation_soil_surface,
-            evaporation_ponded_water,
+            canopy_liquid_throughfall_and_snow_melt_flux,
+            transpiration_flux_from_root_uptake,
             # component inputs
             topmodel_saturation_capacity,
             saturated_hydraulic_conductivity,
@@ -110,10 +119,8 @@ class SubSurfaceComponent(cm4twc.component.SubSurfaceComponent):
         # /!\__RENAMING_CM4TWC__________________________________________
         dt = self.timedelta_in_seconds
 
-        q_m = snowmelt / rho_lw
-        q_t = throughfall / rho_lw
-        e_surf = (transpiration + evaporation_soil_surface
-                  + evaporation_ponded_water) / rho_lw
+        q_t_q_m = canopy_liquid_throughfall_and_snow_melt_flux / rho_lw
+        e_surf = transpiration_flux_from_root_uptake / rho_lw
 
         K_s = saturated_hydraulic_conductivity
         S_max = topmodel_saturation_capacity
@@ -126,7 +133,7 @@ class SubSurfaceComponent(cm4twc.component.SubSurfaceComponent):
 
         # surface store
         # add new rain, snowmelt and throughfall
-        surface = (q_t + q_m) * dt
+        surface = q_t_q_m * dt
         # update
         surface = surface - e_surf * dt
         # avoid small roundoff values
@@ -181,11 +188,11 @@ class SubSurfaceComponent(cm4twc.component.SubSurfaceComponent):
         return (
             # to exchanger
             {
-                'surface_runoff':
+                'surface_runoff_flux_delivered_to_rivers':
                     q_s * rho_lw,
-                'subsurface_runoff':
+                'net_groundwater_flux_to_rivers':
                     q_b * rho_lw,
-                'soil_water_stress':
+                'soil_water_stress_for_transpiration':
                     soil_water_stress
             },
             # component outputs

@@ -37,7 +37,7 @@ class SurfaceLayerComponent(cm4twc.component.SurfaceLayerComponent):
     .. _`Clark and Gedney, 2008`: https://doi.org/10.1029/2007JD008940
     .. _`Moore et al., 1999`: https://doi.org/10.5194/hess-3-233-1999
     .. _`Hock, 2003`: https://doi.org/10.1016/S0022-1694(03)00257-9
-    .. _`Beven, 2011`: http://doi.org/10.1002/9781119951001
+    .. _`Beven, 2011`: https://doi.org/10.1002/9781119951001
     .. _`Rango and Martinec, 1995`: https://doi.org/10.1111/j.1752-1688.1995.tb03392.x
     .. _`Zhang et al., 2006`: https://doi.org/10.3189/172756406781811952
     .. _`Parajka et al., 2010`: https://doi.org/10.1029/2010JD014086
@@ -50,6 +50,11 @@ class SurfaceLayerComponent(cm4twc.component.SurfaceLayerComponent):
     :copyright: 2020, University of Oxford
     """
 
+    _inwards = {}
+    _outwards = {
+        'canopy_liquid_throughfall_and_snow_melt_flux',
+        'transpiration_flux_from_root_uptake'
+    }
     _inputs_info = {
         'precipitation_flux': {
             'units': 'kg m-2 s-1',
@@ -170,7 +175,7 @@ class SurfaceLayerComponent(cm4twc.component.SurfaceLayerComponent):
         }
     }
     _outputs_info = {
-        'evaporation_canopy': {
+        'water_evaporation_flux_from_canopy': {
             'description': 'evaporation of the water on the leaf surface',
             'units': 'kg m-2 s-1'
         }
@@ -352,22 +357,14 @@ class SurfaceLayerComponent(cm4twc.component.SurfaceLayerComponent):
         return (
             # to exchanger
             {
-                'throughfall':
-                    (q_t + p_soil) * rho_lw,
-                'snowmelt':
-                    q_m * rho_lw,
-                'transpiration':
-                    np.zeros(self.spaceshape, dtype_float()),
-                'evaporation_soil_surface':
-                    e_surf * rho_lw,
-                'evaporation_ponded_water':
-                    np.zeros(self.spaceshape, dtype_float()),
-                'evaporation_openwater':
-                    np.zeros(self.spaceshape, dtype_float())
+                'canopy_liquid_throughfall_and_snow_melt_flux':
+                    (q_t + p_soil + q_m) * rho_lw,
+                'transpiration_flux_from_root_uptake':
+                    e_surf * rho_lw
             },
             # component outputs
             {
-                'evaporation_canopy':
+                'water_evaporation_flux_from_canopy':
                     e_can * rho_lw
             }
         )
