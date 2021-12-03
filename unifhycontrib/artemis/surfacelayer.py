@@ -1,10 +1,10 @@
 import numpy as np
 
-import cm4twc
-from cm4twc.settings import dtype_float
+import unifhy
+from unifhy.settings import dtype_float
 
 
-class SurfaceLayerComponent(cm4twc.component.SurfaceLayerComponent):
+class SurfaceLayerComponent(unifhy.component.SurfaceLayerComponent):
     """Artemis provides a simple runoff production model designed to be
     comparable with the runoff-production models typically embedded
     within climate models.

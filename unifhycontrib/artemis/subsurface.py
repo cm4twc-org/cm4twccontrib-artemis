@@ -1,9 +1,9 @@
 import numpy as np
 
-import cm4twc
+import unifhy
 
 
-class SubSurfaceComponent(cm4twc.component.SubSurfaceComponent):
+class SubSurfaceComponent(unifhy.component.SubSurfaceComponent):
     """Artemis provides a simple runoff production model designed to be
     comparable with the runoff-production models typically embedded
     within climate models.

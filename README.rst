@@ -1,4 +1,4 @@
-A cm4twc-compliant version of the distributed hydrological model Artemis
+A unifhy-compliant version of the distributed hydrological model Artemis
 ------------------------------------------------------------------------
 
 Artemis provides a simple runoff production model designed to be
