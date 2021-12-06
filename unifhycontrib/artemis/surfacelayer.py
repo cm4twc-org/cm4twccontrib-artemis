@@ -205,7 +205,7 @@ class SurfaceLayerComponent(unifhy.component.SurfaceLayerComponent):
             R_v, gamma, D_s, b, F, z,
             **kwargs):
 
-        # /!\__RENAMING_CM4TWC__________________________________________
+        # /!\__RENAMING_UNIFHY__________________________________________
         dt = self.timedelta_in_seconds
         datetime = self.current_datetime
 
@@ -252,7 +252,7 @@ class SurfaceLayerComponent(unifhy.component.SurfaceLayerComponent):
         # slope of SVP curve kPa / degC
         Delta_e = 4098. * e_sat / (237.3 + T_degC) ** 2
 
-        # /!\__ADJUSTMENT_CM4TWC____________________________________
+        # /!\__ADJUSTMENT_UNIFHY____________________________________
         # taking z origin as the height where wind is zero (as in JULES)
         z += d + z0
         # __________________________________________________________
@@ -262,7 +262,7 @@ class SurfaceLayerComponent(unifhy.component.SurfaceLayerComponent):
         # Prevent negative r_a
         r_a = np.ma.where(r_a <= 0., 1, r_a)
 
-        # /!\__ADJUSTMENT_CM4TWC____________________________________
+        # /!\__ADJUSTMENT_UNIFHY________________________________________
         # calculate upwelling shortwave "rsus" with albedo
         rsus = surface_albedo * rsds
 
@@ -273,7 +273,7 @@ class SurfaceLayerComponent(unifhy.component.SurfaceLayerComponent):
 
         # total net radiation in W m-2
         R_n = rsds + rlds - rsus - rlus
-        # __________________________________________________________
+        # ______________________________________________________________
 
         # Partition precipitation between canopy, snow, and soil
         pr = pr / rho_lw  # convert to m/s
@@ -350,7 +350,7 @@ class SurfaceLayerComponent(unifhy.component.SurfaceLayerComponent):
         # limit e_surf to available water
         e_surf = np.minimum(surface / dt, e_surf)
 
-        # /!\__UPDATE_STATES_CM4TWC_____________________________________
+        # /!\__UPDATE_STATES_UNIFHY_____________________________________
         canopy_store.set_timestep(0, canopy)
         snowpack_store.set_timestep(0, snowpack)
         # ______________________________________________________________

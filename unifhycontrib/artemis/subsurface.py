@@ -117,7 +117,7 @@ class SubSurfaceComponent(unifhy.component.SubSurfaceComponent):
             m, rho_lw, S_top,
             **kwargs):
 
-        # /!\__RENAMING_CM4TWC__________________________________________
+        # /!\__RENAMING_UNIFHY__________________________________________
         dt = self.timedelta_in_seconds
 
         q_t_q_m = canopy_liquid_throughfall_and_snow_melt_flux / rho_lw
@@ -178,11 +178,11 @@ class SubSurfaceComponent(unifhy.component.SubSurfaceComponent):
         # avoid small roundoff values
         subsurface = np.ma.where(subsurface < 1.e-11, 0., subsurface)
 
-        # /!\__ADDITION_CM4TWC__________________________________________
+        # /!\__ADDITION_UNIFHY__________________________________________
         soil_water_stress = subsurface / S_max
         # ______________________________________________________________
 
-        # /!\__UPDATE_STATES_CM4TWC_____________________________________
+        # /!\__UPDATE_STATES_UNIFHY_____________________________________
         subsurface_store.set_timestep(0, subsurface)
         # ______________________________________________________________
 
