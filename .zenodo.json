@@ -1,0 +1,22 @@
+{
+    "creators": [
+        {
+            "name": "Simon J. Dadson",
+            "affiliation": "UK Centre for Ecology and Hydrology, UK"
+        },
+        {
+            "name": "Thibault Hallouin",
+            "affiliation": "National Centre for Atmospheric Science, UK",
+            "orcid": "0000-0003-0144-2989"
+        },
+        {
+            "name": "Rich Ellis",
+            "affiliation": "UK Centre for Ecology and Hydrology, UK"
+        }
+    ],
+    "title": "unifhycontrib-artemis",
+    "description": "A unifhy-compliant version of the distributed hydrological model Artemis.",
+    "license": {
+        "id": "BSD-3-Clause"
+    }
+}
