@@ -1,4 +1,5 @@
 from setuptools import setup, find_namespace_packages
+import json
 
 
 pkg_name = 'Artemis'
