@@ -1,7 +1,6 @@
 import numpy as np
 
 import unifhy
-from unifhy.settings import dtype_float
 
 
 class SurfaceLayerComponent(unifhy.component.SurfaceLayerComponent):
