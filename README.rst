@@ -1,6 +1,13 @@
 A unifhy-compliant version of the distributed hydrological model Artemis
 ------------------------------------------------------------------------
 
+.. image:: https://img.shields.io/pypi/v/unifhycontrib-artemis?style=flat-square&color=00b0f0
+   :target: https://pypi.python.org/pypi/unifhycontrib-artemis
+   :alt: PyPI Version
+.. image:: https://img.shields.io/badge/dynamic/json?url=https://zenodo.org/api/records/5779946&label=doi&query=doi&style=flat-square&color=00b0f0
+   :target: https://zenodo.org/badge/latestdoi/365224813
+   :alt: DOI
+
 Artemis provides a simple runoff production model designed to be
 comparable with the runoff-production models typically embedded
 within climate models.
