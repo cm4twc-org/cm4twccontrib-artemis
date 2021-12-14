@@ -44,6 +44,6 @@ The sub-surface component of Artemis comprises infiltration and runoff.
 :affiliations:
     1. UK Centre for Ecology and Hydrology
     2. School of Geography and the Environment, University of Oxford
-:licence: BSD-3
+:licence: BSD-3-Clause
 :copyright: 2020, University of Oxford
 
