@@ -46,6 +46,7 @@ class SubSurfaceComponent(unifhy.component.SubSurfaceComponent):
         2. School of Geography and the Environment, University of Oxford
     :licence: BSD-3
     :copyright: 2020, University of Oxford
+    :codebase: https://github.com/unifhy-org/unifhycontrib-artemis
     """
     _inwards = {
         'canopy_liquid_throughfall_and_snow_melt_flux',

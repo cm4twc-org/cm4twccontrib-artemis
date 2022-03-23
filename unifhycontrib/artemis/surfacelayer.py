@@ -47,6 +47,7 @@ class SurfaceLayerComponent(unifhy.component.SurfaceLayerComponent):
         2. School of Geography and the Environment, University of Oxford
     :licence: BSD-3
     :copyright: 2020, University of Oxford
+    :codebase: https://github.com/unifhy-org/unifhycontrib-artemis
     """
 
     _inwards = {}

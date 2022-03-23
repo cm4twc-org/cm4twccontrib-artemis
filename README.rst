@@ -54,4 +54,14 @@ The sub-surface component of Artemis comprises infiltration and runoff.
     3. Department of Meteorology, University of Reading
 :licence: BSD-3-Clause
 :copyright: 2020, University of Oxford
+:codebase: https://github.com/unifhy-org/unifhycontrib-artemis
 
+
+How to install
+~~~~~~~~~~~~~~
+
+This package is available on PyPI, so you can simply run:
+
+.. code-block:: bash
+
+   pip install unifhycontrib-artemis
